@@ -8,7 +8,7 @@ void main() {
       {'_', '_', '_', '_', '_'}
     };
   while (true) { // mantém o código funcionando
-    
+
 
 //front end
     IO.println("--------------------------------------------------------");
@@ -30,7 +30,7 @@ void main() {
         assento(assentos);
       break;
       case 3:
-        fatura();
+        fatura(assentos);
       break;
       case 4:
         sair();
@@ -45,9 +45,9 @@ void main() {
 void mapa(char [] [] assentos){ //mostra o mapa
   // loop que vai mostrar cada caracter de cada index da tabela assentos
   for (int l = 0; l < 5; l++){    //l de linha
-    for (int c = 0; c <5; c++){   //c de coluna
+    for (int c = 0; c < 5; c++){   //c de coluna
       IO.print(assentos[l][c] + " ");
-    }    
+    }
     IO.println(" "); //quebra a linha e deixa visualmente legível
   }
  }
@@ -62,16 +62,28 @@ void assento(char [] [] assentos) {
         IO.println("Reservado!");
     }else{
         IO.println("Ocupado! tente outra poltrona.");
-    }  
+    }
 }
-
-void fatura() {
-    IO.println("Função de faturamento em breve... ");
+//back end
+void fatura(char [] [] assentos) {
+    int qtdAssentos = 0;
+    //Vai ler as cadeiras ocupadas
+    for (int l = 0; l < 5; l++){
+        for (int c = 0; c < 5; c++){
+            if (assentos [l][c] == 'x'){
+	        qtdAssentos++;
+            }
+        }
+    }
+    int valorTotal = qtdAssentos * 10;//Calculo do ingresso
+//front end
+    IO.println("valor do ingresso: R$10,00");
+    IO.println("O total de cadeiras e de " + qtdAssentos + " totalizando R$" + valorTotal);
 }
 
 void sair() {
     IO.println("Saindo do sistema... Até logo!");
     // Para fechar o programa de verdade, podemos usar:
-    System.exit(0); 
+    System.exit(0);
 }
 

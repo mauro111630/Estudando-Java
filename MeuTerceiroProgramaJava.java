@@ -18,7 +18,23 @@ void main(){
     {'_', '_', '_'},
     {'_', '_', '_'}
   };
-  mostrarTabuleiro(tabuleiro);
+  //front
+  IO.println("-------------------------------");
+  IO.println("-------JOGO DA VELHA-----------");
+  IO.println("-------------------------------");
+  //back
+  acabou:
+  for (int maxJogadas = 0; maxJogadas < 9; maxJogadas++){   //Controle do jogo, quem joga e quando termina. O máximo de jogadas é 9.
+    jogar1(tabuleiro);
+    boolean alguemGanhou = false; //controle do jogo
+    if (alguemGanhou == true){
+      break acabou;
+    }
+    jogar2(tabuleiro);
+    if (alguemGanhou == true){
+      break acabou;
+    }
+  }
 }
 //front
 void mostrarTabuleiro(char [][] tabuleiro){
@@ -28,4 +44,40 @@ void mostrarTabuleiro(char [][] tabuleiro){
     } 
   IO.println(" ");
   }
+}
+
+void jogar1(char [][] tabuleiro){
+  //front
+  IO.println("-------------------------------");
+  mostrarTabuleiro(tabuleiro);
+  IO.println("Jogador 1");
+  IO.println("[Obs.: Digite entre 0 e 2]");
+  int linha = Integer.parseInt(IO.readln("Digite a linha:"));
+  int coluna = Integer.parseInt(IO.readln("Digite a coluna:"));
+  //back
+  if (tabuleiro [linha][coluna] == '_'){
+        tabuleiro [linha][coluna] = 'X'; 
+        IO.println("Jogada feita!");
+    }else{
+        IO.println("Preenchido, tente outro");
+        jogar1(tabuleiro);
+    }
+}
+
+void jogar2(char [][] tabuleiro){
+  //front
+  IO.println("-------------------------------");
+  mostrarTabuleiro(tabuleiro);
+  IO.println("Jogador 2");
+  IO.println("[Obs.: Digite entre 0 e 2]");
+  int linha = Integer.parseInt(IO.readln("Digite a linha:"));
+  int coluna = Integer.parseInt(IO.readln("Digite a coluna:"));
+  //back
+  if (tabuleiro [linha][coluna] == '_'){
+        tabuleiro [linha][coluna] = 'O'; 
+        IO.println("Jogada feita!");
+    }else{
+        IO.println("Preenchido, tente outro");
+        jogar2(tabuleiro);
+    }
 }

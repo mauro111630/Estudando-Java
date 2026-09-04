@@ -23,16 +23,20 @@ void main(){
   IO.println("-------JOGO DA VELHA-----------");
   IO.println("-------------------------------");
   //back
-  acabou:
+  parar:
   for (int maxJogadas = 0; maxJogadas < 9; maxJogadas++){   //Controle do jogo, quem joga e quando termina. O máximo de jogadas é 9.
     jogar1(tabuleiro);
-    boolean alguemGanhou = false; //controle do jogo
+    boolean alguemGanhou = conferirQuemGanhou(tabuleiro); //controle do jogo
     if (alguemGanhou == true){
-      break acabou;
+      IO.println("Ganhou!");
+      mostrarTabuleiro(tabuleiro);
+      break parar;
     }
     jogar2(tabuleiro);
     if (alguemGanhou == true){
-      break acabou;
+      IO.println("Ganhou!");
+      mostrarTabuleiro(tabuleiro);
+      break parar;
     }
   }
 }
@@ -81,3 +85,43 @@ void jogar2(char [][] tabuleiro){
         jogar2(tabuleiro);
     }
 }
+
+boolean conferirQuemGanhou(char [][] tabuleiro){
+  for (int linha = 0; linha < 3; linha++){
+    for (int coluna = 0; coluna < 3; coluna++){
+      //possibilidades horizontais
+      if (tabuleiro[linha][0]  == 'X' && tabuleiro[linha][1]  == 'X' && tabuleiro[linha][2]  == 'X' ){
+        return true;
+      }
+      //possibilidades verticais
+      if (tabuleiro[0][coluna]  == 'X' && tabuleiro[1][coluna]  == 'X' && tabuleiro[2][coluna]  == 'X' ){
+        return true;
+      }
+      //possibilidades diagonais
+      if (tabuleiro[0][0]  == 'X' && tabuleiro[1][1]  == 'X' && tabuleiro[2][2]  == 'X' ){
+        return true;
+      }
+      if (tabuleiro[0][2]  == 'X' && tabuleiro[1][1]  == 'X' && tabuleiro[2][0]  == 'X' ){
+        return true;
+      }
+      //Possibilidades do O
+      //possibilidades horizontais
+      if (tabuleiro[linha][0]  == 'O' && tabuleiro[linha][1]  == 'O' && tabuleiro[linha][2]  == 'O' ){
+        return true;
+      }
+      //possibilidades verticais
+      if (tabuleiro[0][coluna]  == 'O' && tabuleiro[1][coluna]  == 'O' && tabuleiro[2][coluna]  == 'O' ){
+        return true;
+      }
+      //possibilidades diagonais
+      if (tabuleiro[0][0]  == 'O' && tabuleiro[1][1]  == 'O' && tabuleiro[2][2]  == 'O' ){
+        return true;
+      }
+      if (tabuleiro[0][2]  == 'O' && tabuleiro[1][1]  == 'O' && tabuleiro[2][0]  == 'O' ){
+        return true;
+      }
+    }
+  } 
+  return false;
+}
+

@@ -23,23 +23,31 @@ void main(){
   IO.println("-------JOGO DA VELHA-----------");
   IO.println("-------------------------------");
   //back
-  parar:
-  for (int maxJogadas = 0; maxJogadas < 9; maxJogadas++){   //Controle do jogo, quem joga e quando termina. O máximo de jogadas é 9.
-    jogar1(tabuleiro);
-    boolean alguemGanhou = conferirQuemGanhou(tabuleiro); //controle do jogo
-    if (alguemGanhou == true){
-      IO.println("Ganhou!");
+  //controle das jogadas
+  jogar1(tabuleiro);//o máx é 9 jogadas, então coloquei 1 jogada de fora pro loop ser 4x2 que é 8 jogadas no loop mais essa da linha comentada
+  for(int maxJogadas = 0; maxJogadas < 4; maxJogadas++){
+    boolean ganhou1 = conferirQuemGanhou(tabuleiro);
+    if(ganhou1 == true){
       mostrarTabuleiro(tabuleiro);
-      break parar;
+      IO.println("ganhou");
+      break;
     }
     jogar2(tabuleiro);
-    if (alguemGanhou == true){
-      IO.println("Ganhou!");
+    boolean ganhou2 = conferirQuemGanhou(tabuleiro);
+    if(ganhou2 == true){
       mostrarTabuleiro(tabuleiro);
-      break parar;
+      IO.println("ganhou");
+      break;
     }
+    jogar1(tabuleiro);
   }
+  boolean empate = conferirQuemGanhou(tabuleiro);
+  if(empate == false){
+      mostrarTabuleiro(tabuleiro);
+      IO.println("empatou");
+    }
 }
+  
 //front
 void mostrarTabuleiro(char [][] tabuleiro){
   for(int linha = 0; linha < 3; linha++){
@@ -85,7 +93,7 @@ void jogar2(char [][] tabuleiro){
         jogar2(tabuleiro);
     }
 }
-
+//back
 boolean conferirQuemGanhou(char [][] tabuleiro){
   for (int linha = 0; linha < 3; linha++){
     for (int coluna = 0; coluna < 3; coluna++){

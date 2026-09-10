@@ -1,14 +1,14 @@
 /*
 Requisitos do programa
--Tabuleiro 3x3 como matriz de char.
--Um método que imprime o tabuleiro de forma legível.
--Alternar entre jogador X e jogador O a cada rodada.
--Pedir linha e coluna da jogada.
--Impedir jogar numa posição já ocupada.
--Validar a entrada com try/catch e checar se linha/coluna estão entre 0 e 2.
--Depois de cada jogada, checar se aquele jogador venceu (3 iguais em linha, coluna ou nas duas diagonais).
--Se ninguém vencer e o tabuleiro encher, anunciar empate.
--Perguntar se quer jogar de novo ao final (reaproveite o while(true)).
+[x]Tabuleiro 3x3 como matriz de char.
+[x]Um método que imprime o tabuleiro de forma legível.
+[x]Alternar entre jogador X e jogador O a cada rodada.
+[x]Pedir linha e coluna da jogada.
+[x]Impedir jogar numa posição já ocupada.
+[-]Validar a entrada com try/catch e checar se linha/coluna estão entre 0 e 2.
+[x]Depois de cada jogada, checar se aquele jogador venceu (3 iguais em linha, coluna ou nas duas diagonais).
+[x]Se ninguém vencer e o tabuleiro encher, anunciar empate.
+[x]Perguntar se quer jogar de novo ao final.
 */
 
 //back
@@ -23,7 +23,31 @@ void main(){
   IO.println("-------JOGO DA VELHA-----------");
   IO.println("-------------------------------");
   //back
-  //controle das jogadas
+  controlarJogo(tabuleiro);
+}
+
+void terminarJogo(char [][] tabuleiro){
+  IO.println("-------------------------------");
+  IO.println("[1] reiniciar");
+  IO.println("[2] acabar");
+  int resposta = Integer.parseInt(IO.readln("Digite um dos valores acima: "));
+  switch (resposta) {
+    case 1 -> reiniciarJogo(tabuleiro);
+    case 2 -> IO.println("tchau!");
+    default -> terminarJogo(tabuleiro);
+  }  
+}
+
+void reiniciarJogo(char [][] tabuleiro){
+  for(int linha = 0; linha < 3; linha++){
+    for(int coluna = 0; coluna < 3; coluna++){
+        tabuleiro [linha][coluna] = '_';  
+    } 
+  }
+  controlarJogo(tabuleiro);
+}
+//back
+void controlarJogo(char [][] tabuleiro){
   jogar1(tabuleiro);//o máx é 9 jogadas, então coloquei 1 jogada de fora pro loop ser 4x2 que é 8 jogadas no loop mais essa da linha comentada
   for(int maxJogadas = 0; maxJogadas < 4; maxJogadas++){
     boolean ganhou1 = conferirQuemGanhou(tabuleiro);
@@ -46,8 +70,8 @@ void main(){
       mostrarTabuleiro(tabuleiro);
       IO.println("empatou");
     }
-}
-  
+  terminarJogo(tabuleiro);
+}  
 //front
 void mostrarTabuleiro(char [][] tabuleiro){
   for(int linha = 0; linha < 3; linha++){
@@ -86,7 +110,7 @@ void jogar2(char [][] tabuleiro){
   int coluna = Integer.parseInt(IO.readln("Digite a coluna:"));
   //back
   if (tabuleiro [linha][coluna] == '_'){
-        tabuleiro [linha][coluna] = 'O'; 
+        tabuleiro [linha][coluna] = 'O';
         IO.println("Jogada feita!");
     }else{
         IO.println("Preenchido, tente outro");

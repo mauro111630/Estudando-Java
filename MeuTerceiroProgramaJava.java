@@ -5,7 +5,7 @@ Requisitos do programa
 [x]Alternar entre jogador X e jogador O a cada rodada.
 [x]Pedir linha e coluna da jogada.
 [x]Impedir jogar numa posição já ocupada.
-[-]Validar a entrada com try/catch e checar se linha/coluna estão entre 0 e 2.
+[x]Validar a entrada com try/catch e checar se linha/coluna estão entre 0 e 2.
 [x]Depois de cada jogada, checar se aquele jogador venceu (3 iguais em linha, coluna ou nas duas diagonais).
 [x]Se ninguém vencer e o tabuleiro encher, anunciar empate.
 [x]Perguntar se quer jogar de novo ao final.
@@ -27,17 +27,24 @@ void main(){
 }
 
 void terminarJogo(char [][] tabuleiro){
+  //front
   IO.println("-------------------------------");
   IO.println("[1] reiniciar");
   IO.println("[2] acabar");
-  int resposta = Integer.parseInt(IO.readln("Digite um dos valores acima: "));
-  switch (resposta) {
-    case 1 -> reiniciarJogo(tabuleiro);
-    case 2 -> IO.println("tchau!");
-    default -> terminarJogo(tabuleiro);
+  //segurança
+  try{
+    int resposta = Integer.parseInt(IO.readln("Digite um dos valores acima: "));
+    switch (resposta) {
+      case 1 -> reiniciarJogo(tabuleiro);
+      case 2 -> IO.println("tchau!");
+      default -> terminarJogo(tabuleiro);
+    }
+  }catch(NumberFormatException e){
+    IO.println("Resposta inválida!");
+    terminarJogo(tabuleiro);
   }  
 }
-
+//back
 void reiniciarJogo(char [][] tabuleiro){
   for(int linha = 0; linha < 3; linha++){
     for(int coluna = 0; coluna < 3; coluna++){
@@ -88,16 +95,22 @@ void jogar1(char [][] tabuleiro){
   mostrarTabuleiro(tabuleiro);
   IO.println("Jogador 1");
   IO.println("[Obs.: Digite entre 0 e 2]");
-  int linha = Integer.parseInt(IO.readln("Digite a linha:"));
-  int coluna = Integer.parseInt(IO.readln("Digite a coluna:"));
-  //back
-  if (tabuleiro [linha][coluna] == '_'){
+  //segurança
+  try{
+    int linha = Integer.parseInt(IO.readln("Digite a linha:"));
+    int coluna = Integer.parseInt(IO.readln("Digite a coluna:"));
+    //back
+    if (tabuleiro [linha][coluna] == '_'){
         tabuleiro [linha][coluna] = 'X'; 
         IO.println("Jogada feita!");
     }else{
         IO.println("Preenchido, tente outro");
         jogar1(tabuleiro);
     }
+  }catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
+    IO.println("Resposta inválida!");
+    jogar1(tabuleiro);
+  }   
 }
 
 void jogar2(char [][] tabuleiro){
@@ -106,16 +119,22 @@ void jogar2(char [][] tabuleiro){
   mostrarTabuleiro(tabuleiro);
   IO.println("Jogador 2");
   IO.println("[Obs.: Digite entre 0 e 2]");
-  int linha = Integer.parseInt(IO.readln("Digite a linha:"));
-  int coluna = Integer.parseInt(IO.readln("Digite a coluna:"));
-  //back
-  if (tabuleiro [linha][coluna] == '_'){
-        tabuleiro [linha][coluna] = 'O';
+  //segurança
+  try{
+    int linha = Integer.parseInt(IO.readln("Digite a linha:"));
+    int coluna = Integer.parseInt(IO.readln("Digite a coluna:"));
+    //back
+    if (tabuleiro [linha][coluna] == '_'){
+        tabuleiro [linha][coluna] = 'O'; 
         IO.println("Jogada feita!");
     }else{
         IO.println("Preenchido, tente outro");
         jogar2(tabuleiro);
     }
+  }catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
+    IO.println("Resposta inválida!");
+    jogar2(tabuleiro);
+  } 
 }
 //back
 boolean conferirQuemGanhou(char [][] tabuleiro){

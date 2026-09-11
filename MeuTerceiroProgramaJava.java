@@ -76,6 +76,9 @@ void controlarJogo(char [][] tabuleiro){
   if(empate == false){
       mostrarTabuleiro(tabuleiro);
       IO.println("empatou");
+    }else{
+      mostrarTabuleiro(tabuleiro);
+      IO.println("ganhou");
     }
   terminarJogo(tabuleiro);
 }  

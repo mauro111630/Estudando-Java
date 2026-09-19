@@ -8,9 +8,9 @@ Requisitos do programa Batalha Naval
 [X] Impedir atirar de novo numa posição já atacada
 [X] Se acertar um navio: marcar 'X' no tabuleiro visível e avisar "Acertou!"
 [X] Se errar: marcar 'O' no tabuleiro visível e avisar "Água!"
-[ ] Contar quantos navios já afundaram
-[ ] Quando os 5 navios forem afundados, anunciar vitória e mostrar quantos tiros foram usados
-[ ] Perguntar se quer jogar de novo ao final
+[X] Contar quantos navios já afundaram
+[X] Quando os 5 navios forem afundados, anunciar vitória e mostrar quantos tiros foram usados
+[X] Perguntar se quer jogar de novo ao final
 */
 
 import java.util.random.*;
@@ -31,14 +31,35 @@ void main(){
     {'_', '_', '_', '_', '_'},
     {'_', '_', '_', '_', '_'}
   };
-  aletorizarNavios(naviosTabuleiro);
-  //controle do jogo
   boolean i = true;
   while(i == true){
+    aletorizarNavios(naviosTabuleiro);
     jogar(naviosTabuleiro, baseTabuleiro);
-    i = true;
+    i = fimJogo();
   }
-  
+ }
+
+boolean fimJogo(){
+  try{
+    IO.println("Jogar de novo?");
+    IO.println("[1] SIM");
+    IO.println("[2] NÃO");
+    int resposta = Integer.parseInt(IO.readln("Digite sua resposta: "));
+    switch(resposta) {
+      case 1 -> {return true;}
+      case 2 -> {
+        IO.println("Tchau!");
+        return false;
+      }
+      default -> {
+        IO.println("Resposta inválida!");
+        return fimJogo();
+      }
+    }
+  }catch(NumberFormatException e){
+    IO.println("Resposta inválida!");
+    return fimJogo();
+  }  
 }
 
 void mostrarHUD(char [][] base){
@@ -78,31 +99,44 @@ void mostrarHUD(char [][] base){
 }
 
 void jogar(char [][] navios, char [][] base){
-  //validação de entradas do usuário
-  mostrarHUD(base);
-  IO.println("------------------------------------------------");
-  try{
-    int linha = Integer.parseInt(IO.readln("Digite coodenada Y: "));
-    int coluna = Integer.parseInt(IO.readln("Digite coordenada X: "));
-    //condições das possibilidades de jogada, são duas: na água ou navio. Mas também tem a de jogar onde já jogou.
-    if(navios [linha][coluna] == 'N'){
+  //controle do jogo
+  int contadorNaviosDestruidos = 0;
+  int contadorTirosDados = 0;
+  boolean i = true;
+  while(i == true){
+    mostrarHUD(base);
+    IO.println("Navios destruídos = " + contadorNaviosDestruidos);
+    //validação de entradas do usuário
+    try{
+      int linha = Integer.parseInt(IO.readln("Digite coodenada Y: "));
+      int coluna = Integer.parseInt(IO.readln("Digite coordenada X: "));
+      //condições das possibilidades de jogada, são duas: na água ou navio. Mas também tem a de jogar onde já jogou.
+      if(navios [linha][coluna] == 'N'){
         IO.println("ACERTOU em cheio!! (#o#)");
         base [linha][coluna] = 'X';
-    }else{
-      if(base[linha][coluna] == 'O' || base[linha][coluna] == 'X' ){
-        IO.println("Já atirou aqui!, escolha outra coordernada.");
-        jogar(navios, base);  
+        contadorNaviosDestruidos++;
+        contadorTirosDados++;
       }else{
-      base [linha][coluna] = 'O';
-        IO.println("Tiro dado na água (¬_¬)");
-      }  
+        if(base[linha][coluna] == 'O' || base[linha][coluna] == 'X' ){
+          IO.println("Já atirou aqui!, escolha outra coordernada."); 
+        }else{
+          base [linha][coluna] = 'O';
+          IO.println("Tiro dado na água (¬_¬)");
+          contadorTirosDados++;
+        }  
+      }
+    }catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
+      IO.println("Resposta inválida!");
+      jogar(navios, base);
+    }   
+    if(contadorNaviosDestruidos == 5){
+      IO.println("Todos os 5 navios foram destruídos" );
+      IO.println("Foram dados " + contadorTirosDados + " tiros");
+      IO.println("Ganhou!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      i = false;
     }
-  }catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
-    IO.println("Resposta inválida!");
-    jogar(navios, base);
-  }   
+  }
 }
-
 void aletorizarNavios(char [][] tabuleiro){
   limparTabela(tabuleiro);
   //embaralhando 5 navios
@@ -131,4 +165,5 @@ void limparTabela(char [][] tabuleiro){
     } 
   }
 }
+
 

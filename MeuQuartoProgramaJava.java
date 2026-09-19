@@ -6,8 +6,8 @@ Requisitos do programa Batalha Naval
 [X] Pedir linha e coluna do "tiro" a cada rodada
 [X] Validar a entrada com try/catch e checar se linha/coluna estão entre 0 e 4
 [X] Impedir atirar de novo numa posição já atacada
-[ ] Se acertar um navio: marcar 'X' no tabuleiro visível e avisar "Acertou!"
-[ ] Se errar: marcar 'O' no tabuleiro visível e avisar "Água!"
+[X] Se acertar um navio: marcar 'X' no tabuleiro visível e avisar "Acertou!"
+[X] Se errar: marcar 'O' no tabuleiro visível e avisar "Água!"
 [ ] Contar quantos navios já afundaram
 [ ] Quando os 5 navios forem afundados, anunciar vitória e mostrar quantos tiros foram usados
 [ ] Perguntar se quer jogar de novo ao final
@@ -31,6 +31,15 @@ void main(){
     {'_', '_', '_', '_', '_'},
     {'_', '_', '_', '_', '_'}
   };
+  mostrarHUD();
+  aletorizarNavios(naviosTabuleiro);
+  //controle do jogo
+  boolean i = true;
+  while(i == true){
+    jogar(naviosTabuleiro, baseTabuleiro);
+    i = false;
+  }
+  
 }
 
 void mostrarHUD(){
@@ -48,24 +57,29 @@ void mostrarHUD(){
   IO.println("------------------------------------------------");
 }
 
-void jogar(char [][] tabuleiro){
+void jogar(char [][] navios, char [][] base){
   //validação de entradas do usuário
+  mostrarTabuleiro(base);
+  IO.println("------------------------------------------------");
   try{
     int linha = Integer.parseInt(IO.readln("Digite coodenada Y: "));
     int coluna = Integer.parseInt(IO.readln("Digite coordenada X: "));
-    if(tabuleiro [linha][coluna] == '_'){
-        tabuleiro [linha][coluna] = 'X'; 
+    //condições das possibilidades de jogada, são duas: na água ou navio. Mas também tem a de jogar onde já jogou.
+    if(navios [linha][coluna] == '_'){
+        base [linha][coluna] = 'O';
         IO.println("Tiro dado na água (¬_¬)");
     }else{
-        if(tabuleiro [linha][coluna] == 'X'){
-          IO.println("Tiro dado da água, dnv (0_0)");
-        }else{
-          IO.println("ACERTOU em cheio!! (#o#)");  // aqui
-        }
+      if(base[linha][coluna] == 'O'){
+        IO.println("Já atirou aqui!, escolha outra coordernada.");
+        jogar(navios, base);  
+      }else{
+        IO.println("ACERTOU em cheio!! (#o#)");
+        base [linha][coluna] = 'X';
+      }  
     }
   }catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
     IO.println("Resposta inválida!");
-    jogar(tabuleiro);
+    jogar(navios, base);
   }   
 }
 

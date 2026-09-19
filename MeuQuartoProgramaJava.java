@@ -31,50 +31,70 @@ void main(){
     {'_', '_', '_', '_', '_'},
     {'_', '_', '_', '_', '_'}
   };
-  mostrarHUD();
   aletorizarNavios(naviosTabuleiro);
   //controle do jogo
   boolean i = true;
   while(i == true){
     jogar(naviosTabuleiro, baseTabuleiro);
-    i = false;
+    i = true;
   }
   
 }
 
-void mostrarHUD(){
+void mostrarHUD(char [][] base){
   IO.println("------------------------------------------------");
   IO.println("                   JOGO NAVAL                   ");
   IO.println("Tabuleiro 5x5");
   IO.println("Coordenadas Y e X");
   IO.println(" Y");
-  IO.println("|0| | | | | |");
-  IO.println("|1| | | | | |");
-  IO.println("|2| | | | | |");
-  IO.println("|3| | | | | |");
-  IO.println("|4| | | | | |");
+  
+  IO.print("|0|");
+  for(int i = 0; i<5; i++){            //mostrar a tabela de forma mais intuitiva
+    IO.print(base[0][i] +"|");
+  }
+  IO.println("");
+  IO.print("|1|");
+  for(int i = 0; i<5; i++){         
+    IO.print(base[1][i] +"|");
+  }
+  IO.println("");  
+  IO.print("|2|");
+  for(int i = 0; i<5; i++){         
+    IO.print(base[2][i] +"|");
+  }
+  IO.println("");
+  IO.print("|3|");
+  for(int i = 0; i<5; i++){         
+    IO.print(base[3][i] +"|");
+  }
+  IO.println("");  
+  IO.print("|4|");
+  for(int i = 0; i<5; i++){         
+    IO.print(base[4][i] +"|");
+  }
+  IO.println("");  
   IO.println("| |0|1|2|3|4| X");
   IO.println("------------------------------------------------");
 }
 
 void jogar(char [][] navios, char [][] base){
   //validação de entradas do usuário
-  mostrarTabuleiro(base);
+  mostrarHUD(base);
   IO.println("------------------------------------------------");
   try{
     int linha = Integer.parseInt(IO.readln("Digite coodenada Y: "));
     int coluna = Integer.parseInt(IO.readln("Digite coordenada X: "));
     //condições das possibilidades de jogada, são duas: na água ou navio. Mas também tem a de jogar onde já jogou.
-    if(navios [linha][coluna] == '_'){
-        base [linha][coluna] = 'O';
-        IO.println("Tiro dado na água (¬_¬)");
+    if(navios [linha][coluna] == 'N'){
+        IO.println("ACERTOU em cheio!! (#o#)");
+        base [linha][coluna] = 'X';
     }else{
-      if(base[linha][coluna] == 'O'){
+      if(base[linha][coluna] == 'O' || base[linha][coluna] == 'X' ){
         IO.println("Já atirou aqui!, escolha outra coordernada.");
         jogar(navios, base);  
       }else{
-        IO.println("ACERTOU em cheio!! (#o#)");
-        base [linha][coluna] = 'X';
+      base [linha][coluna] = 'O';
+        IO.println("Tiro dado na água (¬_¬)");
       }  
     }
   }catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
@@ -112,11 +132,3 @@ void limparTabela(char [][] tabuleiro){
   }
 }
 
-void mostrarTabuleiro(char [][] tabuleiro){
-  for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      IO.print(tabuleiro[linha][coluna] + " ");
-    } 
-  IO.println(" ");
-  }
-}

@@ -103,8 +103,8 @@ void mostrarHUD(char [][] base){
 
 void jogar(char [][] navios, char [][] base, int naviosDestruidos, int tirosDados){
   //controle do jogo
-  boolean i = true;
-  while(i == true){
+  boolean controleJogo = true;
+  while(controleJogo == true){
     mostrarHUD(base);
     IO.println("Navios destruídos = " + naviosDestruidos);
     IO.println("Tiros dados = " + tirosDados);
@@ -129,13 +129,12 @@ void jogar(char [][] navios, char [][] base, int naviosDestruidos, int tirosDado
       }
     }catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
       IO.println("Resposta inválida!");
-      jogar(navios, base, naviosDestruidos, tirosDados);
     }   
     if(naviosDestruidos == 5){
       IO.println("Todos os 5 navios foram destruídos" );
       IO.println("Foram dados " + tirosDados + " tiros");
       IO.println("Ganhou!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      i = false;
+      controleJogo = false;
     }
   }
 }

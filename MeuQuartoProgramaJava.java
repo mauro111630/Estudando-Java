@@ -111,7 +111,7 @@ void jogar(char [][] navios, char [][] base){
       int linha = Integer.parseInt(IO.readln("Digite coodenada Y: "));
       int coluna = Integer.parseInt(IO.readln("Digite coordenada X: "));
       //condições das possibilidades de jogada, são duas: na água ou navio. Mas também tem a de jogar onde já jogou.
-      if(navios [linha][coluna] == 'N'){
+      if(navios [linha][coluna] == 'N' && base [linha][coluna] == '_'){ //corrigindo bug de atirar no mesmo navio pra ganhar
         IO.println("ACERTOU em cheio!! (#o#)");
         base [linha][coluna] = 'X';
         contadorNaviosDestruidos++;

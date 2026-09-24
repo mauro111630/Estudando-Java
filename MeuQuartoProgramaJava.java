@@ -34,7 +34,9 @@ void main(){
   boolean i = true;
   while(i == true){
     aletorizarNavios(naviosTabuleiro);
-    jogar(naviosTabuleiro, baseTabuleiro);
+    int contadorNavios = 0;
+    int contadorTiros = 0;
+    jogar(naviosTabuleiro, baseTabuleiro, contadorNavios, contadorTiros);
     i = fimJogo();
   }
  }
@@ -98,14 +100,13 @@ void mostrarHUD(char [][] base){
   IO.println("------------------------------------------------");
 }
 
-void jogar(char [][] navios, char [][] base){
+void jogar(char [][] navios, char [][] base, int naviosDestruidos, int tirosDados){
   //controle do jogo
-  int contadorNaviosDestruidos = 0;
-  int contadorTirosDados = 0;
   boolean i = true;
   while(i == true){
     mostrarHUD(base);
-    IO.println("Navios destruídos = " + contadorNaviosDestruidos);
+    IO.println("Navios destruídos = " + naviosDestruidos);
+    IO.println("Tiros dados = " + tirosDados);
     //validação de entradas do usuário
     try{
       int linha = Integer.parseInt(IO.readln("Digite coodenada Y: "));
@@ -114,24 +115,24 @@ void jogar(char [][] navios, char [][] base){
       if(navios [linha][coluna] == 'N' && base [linha][coluna] == '_'){ //corrigindo bug de atirar no mesmo navio pra ganhar
         IO.println("ACERTOU em cheio!! (#o#)");
         base [linha][coluna] = 'X';
-        contadorNaviosDestruidos++;
-        contadorTirosDados++;
+        naviosDestruidos++;
+        tirosDados++;
       }else{
         if(base[linha][coluna] == 'O' || base[linha][coluna] == 'X' ){
           IO.println("Já atirou aqui!, escolha outra coordernada."); 
         }else{
           base [linha][coluna] = 'O';
           IO.println("Tiro dado na água (¬_¬)");
-          contadorTirosDados++;
+          tirosDados++;
         }  
       }
     }catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
       IO.println("Resposta inválida!");
-      jogar(navios, base);
+      jogar(navios, base, naviosDestruidos, tirosDados);
     }   
-    if(contadorNaviosDestruidos == 5){
+    if(naviosDestruidos == 5){
       IO.println("Todos os 5 navios foram destruídos" );
-      IO.println("Foram dados " + contadorTirosDados + " tiros");
+      IO.println("Foram dados " + tirosDados + " tiros");
       IO.println("Ganhou!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       i = false;
     }

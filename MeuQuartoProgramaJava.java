@@ -34,6 +34,7 @@ void main(){
   boolean i = true;
   while(i == true){
     aletorizarNavios(naviosTabuleiro);
+    limparTabela(baseTabuleiro);
     int contadorNavios = 0;
     int contadorTiros = 0;
     jogar(naviosTabuleiro, baseTabuleiro, contadorNavios, contadorTiros);

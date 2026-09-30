@@ -4,8 +4,8 @@ Requisitos do programa - Campo Minado
 [X] Uma segunda matriz 8x8, escondida, com 10 minas ('M') em posições aleatórias
 [X] Um método que, para uma casa sem mina, conta quantas minas existem nas até 8 casas vizinhas (cuidado com os limites do tabuleiro!)
 [X] Um método que imprime SÓ o tabuleiro visível
-[ ] Pedir linha e coluna da casa a revelar
-[ ] Validar a entrada com try/catch e checar se linha/coluna estão entre 0 e 7
+[X] Pedir linha e coluna da casa a revelar
+[X] Validar a entrada com try/catch e checar se linha/coluna estão entre 0 e 7
 [ ] Impedir revelar de novo uma casa já revelada
 [ ] Se a casa tiver mina: revelar todas as minas no tabuleiro e anunciar "Você perdeu!"
 [ ] Se a casa tiver 0 minas vizinhas: revelar automaticamente, em cascata, todas as vizinhas vazias (aqui é recursão de verdade — com caso base, sem repetir o problema do catch da Batalha Naval)
@@ -38,13 +38,23 @@ void main(){
     {'#', '#', '#', '#', '#', '#', '#', '#'},
     {'#', '#', '#', '#', '#', '#', '#', '#'}
   };
+  //Organizando o inicio do game
   aletorizarMinas(tabuleiroInterior);
-  mostrarHUD(tabuleiroInterior);
-  designarCasas(tabuleiroInterior, tabuleiroSuperficie  );
   mostrarHUD(tabuleiroSuperficie);
-  
-
- 
+  designarCasas(tabuleiroInterior, tabuleiroSuperficie);
+  //Entrada de dados
+  int coordenadaY = jogar('Y');
+  int coordenadaX = jogar('X');
+  //Saída de dados
+  switch(tabuleiroInterior[coordenadaY][coordenadaX]){
+    case 'M' ->{
+      mostrarHUD(tabuleiroInterior);
+      IO.println("PERDEU!");
+    }
+    case '#' ->{
+      mostrarHUD(tabuleiroSuperficie);   
+    }
+  }
 }
 
 void designarCasas(char [][] tabuleiroMinas, char [][] tabuleiroBase){
@@ -59,7 +69,6 @@ void designarCasas(char [][] tabuleiroMinas, char [][] tabuleiroBase){
       }else{
         tabuleiroBase[linha][coluna] = '_'; //casa vazia
       }
-      //Tem uma terceira possibilidade, sem a casa for uma mina
     } 
   
   }
@@ -170,7 +179,7 @@ int conferir8CasasEmVolta(char [][] tabuleiro, int coordenadaY, int coordenadaX)
 void mostrarHUD(char [][] base){
   IO.println("------------------------------------------------");
   IO.println("            JOGO CAMPO MINADO                   ");
-  IO.println("Tabuleiro 5x5");
+  IO.println("Tabuleiro 8x8");
   IO.println("Coordenadas Y e X");
   IO.println(" Y");
   
@@ -220,7 +229,7 @@ void mostrarHUD(char [][] base){
   IO.println("------------------------------------------------");
 }
 //entrada de valor do usuário
-int jogar(){
+int jogar(char simbolo){
   //variáveis locais
   int respostaJogada = 0;      
   boolean controleJogo = true; 
@@ -229,12 +238,17 @@ int jogar(){
     boolean statusResposta = true;
     //validação de entradas do usuário
     try{
-      respostaJogada = Integer.parseInt(IO.readln(""));
+      respostaJogada = Integer.parseInt(IO.readln("Escolha a coordenada " + simbolo + ":"));
     }catch(NumberFormatException e) {
       IO.println("Resposta inválida!");
       statusResposta = false;
-    }   
-    if(statusResposta == true){  //Validando se o jogador digitou um valor válido
+    }
+    //Validando se o jogador digitou um valor válido
+    if((respostaJogada > 7) || (respostaJogada < 0)){
+      IO.println("Resposta inválida!");
+      statusResposta = false;      
+    }
+    if(statusResposta == true){  
       controleJogo = false;
     }
   }

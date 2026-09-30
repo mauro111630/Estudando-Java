@@ -40,7 +40,7 @@ void main(){
   };
   aletorizarMinas(tabuleiroInterior);
   mostrarHUD(tabuleiroInterior);
-  designarCasas(tabuleiroInterior, tabuleiroSuperficie);
+  designarCasas(tabuleiroInterior, tabuleiroSuperficie  );
   mostrarHUD(tabuleiroSuperficie);
   
 
@@ -174,49 +174,49 @@ void mostrarHUD(char [][] base){
   IO.println("Coordenadas Y e X");
   IO.println(" Y");
   
-  IO.print("|0|");
+  IO.print("|0| |");
   for(int i = 0; i<8; i++){            //mostrar a tabela de forma mais intuitiva
     IO.print(base[0][i] +"|");
   }
   IO.println("");
-  IO.print("|1|");
+  IO.print("|1| |");
   for(int i = 0; i<8; i++){         
     IO.print(base[1][i] +"|");
   }
   IO.println("");  
-  IO.print("|2|");
+  IO.print("|2| |");
   for(int i = 0; i<8; i++){         
     IO.print(base[2][i] +"|");
   }
   IO.println("");
-  IO.print("|3|");
+  IO.print("|3| |");
   for(int i = 0; i<8; i++){         
     IO.print(base[3][i] +"|");
   }
   IO.println("");  
-  IO.print("|4|");
+  IO.print("|4| |");
   for(int i = 0; i<8; i++){         
     IO.print(base[4][i] +"|");
   }
   IO.println("");  
-  IO.print("|5|");
+  IO.print("|5| |");
   for(int i = 0; i<8; i++){         
   IO.print(base[5][i] +"|");
   }
   IO.println("");
-  IO.print("|6|");
+  IO.print("|6| |");
   for(int i = 0; i<8; i++){         
   IO.print(base[6][i] +"|");
   }
   IO.println("");
-  IO.print("|7|");
+  IO.print("|7| |");
   for(int i = 0; i<8; i++){         
   IO.print(base[7][i] +"|");
   }
   IO.println(""); 
   
-  
-  IO.println("| |0|1|2|3|4|5|6|7| X");
+  IO.println("");
+  IO.println("    |0|1|2|3|4|5|6|7| X");
   IO.println("------------------------------------------------");
 }
 //entrada de valor do usuário

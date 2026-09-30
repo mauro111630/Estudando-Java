@@ -40,14 +40,29 @@ void main(){
   };
   aletorizarMinas(tabuleiroInterior);
   mostrarHUD(tabuleiroInterior);
-  IO.print("Coordenada Y:");
-  int coordenadaY = jogar();
-  IO.print("Coordenada X:");
-  int coordenadaX = jogar();
-  int qtdBombasPerto = conferir8CasasEmVolta(tabuleiroInterior, coordenadaY, coordenadaX);
-  IO.print("Bombas perto:" + qtdBombasPerto);
+  designarCasas(tabuleiroInterior, tabuleiroSuperficie);
+  mostrarHUD(tabuleiroSuperficie);
+  
 
  
+}
+
+void designarCasas(char [][] tabuleiroMinas, char [][] tabuleiroBase){
+  //percorrer toda a tabela, para verificar a quantidade de bombas, e se for 0, se torna uma casa vazia, senão colocar um número.
+  for(int linha = 0; linha < 8; linha++){
+    for(int coluna = 0; coluna < 8; coluna++){ //dois for, por que é uma matriz bidimensional.
+      int qtdBombasPerto = conferir8CasasEmVolta(tabuleiroMinas, linha, coluna); 
+      //condições que a casa pode ter são com bomba ou sem.
+      if((qtdBombasPerto > 0) && (tabuleiroMinas[linha][coluna] == '#')){
+        char c1 = (char) ('0' + qtdBombasPerto);  //transformando o int em char para ir na tabela.
+        tabuleiroBase[linha][coluna] = c1; //primeiro linha depois coluna
+      }else{
+        tabuleiroBase[linha][coluna] = '_'; //casa vazia
+      }
+      //Tem uma terceira possibilidade, sem a casa for uma mina
+    } 
+  
+  }
 }
 
 void aletorizarMinas(char [][] tabuleiro){

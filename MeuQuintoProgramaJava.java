@@ -1,3 +1,4 @@
+//Me perdir, fiz de qualquer jeito, sem planejamento só confiando na minha imensa vaidade planetuosa. Abandonei dia 27/10/2027
 /*
 Requisitos do programa - Campo Minado
 [X] Tabuleiro 8x8 como matriz de char, tudo começa oculto (ex: '#')

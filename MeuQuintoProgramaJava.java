@@ -42,19 +42,29 @@ void main(){
   aletorizarMinas(tabuleiroInterior);
   mostrarHUD(tabuleiroSuperficie);
   designarCasas(tabuleiroInterior, tabuleiroSuperficie);
-  //Entrada de dados
-  int coordenadaY = jogar('Y');
-  int coordenadaX = jogar('X');
-  //Saída de dados
-  switch(tabuleiroInterior[coordenadaY][coordenadaX]){
-    case 'M' ->{
-      mostrarHUD(tabuleiroInterior);
-      IO.println("PERDEU!");
-    }
-    case '#' ->{
-      mostrarHUD(tabuleiroSuperficie);   
-    }
+  int resultadoJogo = controlarJogo(tabuleiroInterior, tabuleiroSuperficie);
+}
+
+int controlarJogo(char [][] tabuleiroInterior, char [][] tabuleiroSuperficie){
+  int i = 0;
+  while(i == 0){
+    //Entrada de dados
+    int coordenadaY = jogar('Y');
+    int coordenadaX = jogar('X');
+    //Saída de dados
+    switch(tabuleiroInterior[coordenadaY][coordenadaX]){
+      case 'M' ->{
+        mostrarHUD(tabuleiroInterior);
+        IO.println("PERDEU!");
+        i = 1;
+        return 0;
+      }
+      case '#' ->{
+        mostrarHUD(tabuleiroSuperficie);
+      }
+    }  
   }
+  return 1;
 }
 
 void designarCasas(char [][] tabuleiroMinas, char [][] tabuleiroBase){
@@ -69,8 +79,7 @@ void designarCasas(char [][] tabuleiroMinas, char [][] tabuleiroBase){
       }else{
         tabuleiroBase[linha][coluna] = '_'; //casa vazia
       }
-    } 
-  
+    }  
   }
 }
 
